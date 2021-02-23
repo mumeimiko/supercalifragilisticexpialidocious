@@ -1,0 +1,185 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "A sample template",
+    "Parameters": {
+        "KeyName": {
+            "Description": "Name of an existing EC2 KeyPair to enable SSH access to the instance",
+            "Type": "AWS::EC2::KeyPair::KeyName"
+        },
+        "Inst": {
+            "Type": "String",
+            "Default": "t2.micro",
+            "AllowedValues": [
+                "t2.micro",
+                "t2.large",
+                "c5.4xlarge"
+            ]
+        },
+      "LatestAmiId": {
+        "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+        "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+      }
+    },
+    "Resources": {
+        "MyEC2Instance1": {
+            "Type": "AWS::EC2::Instance",
+            "Metadata": {
+                "AWS::CloudFormation::Init": {
+                  "configSets": {
+                    "InstallAndRun": [
+                      "Install"
+                    ]
+                  },
+                  "Install": {
+                    "packages": {
+                      "yum": {
+                        "httpd": [],
+                        "php": [],
+                        "docker": [],
+                        "python3-pip": []
+                      }
+                    },
+                    "services": {
+                      "sysvinit": {
+                        "httpd": {
+                          "enabled": "true",
+                          "ensureRunning": "true"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+            "Properties": {
+                "ImageId": {
+                      "Ref": "LatestAmiId"
+                  },
+                "InstanceType": {
+                    "Ref": "Inst"
+                },
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "SecurityGroups": [
+                    {
+                        "Ref": "InstanceSecurityGroup"
+                    }
+                ],
+                "BlockDeviceMappings": [
+                  {
+                    "DeviceName": "/dev/xvda",
+                    "Ebs": {
+                      "VolumeType": "gp2",
+                      "VolumeSize": "120",
+                      "DeleteOnTermination":"false"
+                    }
+                  }
+                ],
+                "UserData": {
+                    "Fn::Base64": {
+                      "Fn::Join": [
+                        "",
+                        [
+                          "#!/bin/bash -xe\n",
+                          "wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \n",
+                          "install minikube-linux-amd64 /usr/local/bin/minikube \n",
+                          "curl -LO https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl \n",
+                          "install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl \n",
+                          "yum update -y aws-cfn-bootstrap || yum install -y aws-cfn-bootstrap\n",
+                          "/opt/aws/bin/cfn-init -v ",
+                          "         --stack ",
+                          {
+                            "Ref": "AWS::StackName"
+                          },
+                          "         --resource MyEC2Instance1 ",
+                          "         --configsets InstallAndRun ",
+                          "         --region ",
+                          {
+                            "Ref": "AWS::Region"
+                          },
+                          "\n",
+                          "cd /tmp \n",
+                          "touch /tmp/heresafilemofo \n",
+                          "\n",
+                          "ls -l /tmp > /tmp/tmp.txt\n",
+                          "pwd > /tmp/pwd.txt\n",
+                          "wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \n",
+                          "install minikube-linux-amd64 /usr/local/bin/minikube\n",
+                          "yum update -y\n",
+                          "\n",
+                          "\n",
+                          "sudo usermod -a -G docker ec2-user\n",
+                          "sudo service docker start\n",
+                          "minikube config set driver docker\n",
+                          "# Signal the status from cfn-init\n",
+                          "",
+                          "/opt/aws/bin/cfn-signal -e $? ",
+                          "         --stack ",
+                          {
+                            "Ref": "AWS::StackName"
+                          },
+                          "         --resource MyEC2Instance1 ",
+                          "         --region ",
+                          {
+                            "Ref": "AWS::Region"
+                          },
+                          "",
+                          "",
+                          ""
+                        ]
+                      ]
+                    }
+                  }
+            }
+        },
+        "InstanceSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Enable SSH access via port 22",
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "80",
+                        "ToPort": "80",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "8080",
+                        "ToPort": "8080",
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            }
+        }
+    },
+    "Outputs": {
+        "MyEC2Instance1": {
+            "Description": "InstanceId of the 1st instance created",
+            "Value": {
+                "Ref": "MyEC2Instance1"
+            }
+        },
+        "InstanceSecurityGroup": {
+            "Description": "Security group created",
+            "Value": {
+                "Ref": "InstanceSecurityGroup"
+            }
+        },
+        "PublicIp": {
+            "Description": "Public IP for instance1",
+            "Value": {
+                "Fn::GetAtt": [
+                    "MyEC2Instance1",
+                    "PublicIp"
+                ]
+            }
+        }
+    }
+}
