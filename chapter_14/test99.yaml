@@ -1,0 +1,33 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: staging
+  name: staging-role-minimum
+rules:
+- apiGroups: ["*"] # Ignoring this for the time being 
+  resources: ["*"]
+  verbs: ["get", "watch", "list"]
+- apiGroups: [""] # Ignoring this for the time being 
+  resources: ["pods"]
+  verbs: ["delete"]
+- apiGroups: ["*"] # Ignoring this for the time being 
+  resources: ["deployment"]
+  verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods
+  namespace: staging
+subjects:
+# You can specify more than one "subject"
+- kind: User
+  name: mike # "name" is case sensitive
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  # "roleRef" specifies the binding to a Role / ClusterRole
+  kind: Role #this must be Role or ClusterRole
+  name: staging-role-user # this must match the name of the Role or ClusterRole you want to bind to
+  apiGroup: rbac.authorization.k8s.io
+
