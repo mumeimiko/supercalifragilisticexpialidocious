@@ -134,12 +134,3 @@ you can run kubectl scale replicasets web-server-2 --replicas=4
     web-server-1-5d49f66f6   3         3         3       5h30m
     web-server-2             4         4         4       5h7m
 
-
-Takeaways 
-
-
-Exercises
-
-# Excersise 1
-
-Create a pod and then have it join replicaset 
