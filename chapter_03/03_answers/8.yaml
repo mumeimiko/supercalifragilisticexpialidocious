@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: slide
+  name: slide
+spec:
+  containers:
+  - args:
+    - /bin/sh
+    - -c
+    - echo hello;sleep 3600
+    image: nginx
+    name: slide
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Never
+  - containerPort: 80
+status: {}
