@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: test3
+  name: onepiece
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: test3
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: test3
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+        livenessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 15
+          periodSeconds: 15 
+status: {}

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    allfor: one
+  name: academia
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      allfor: one
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        allfor: one
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+      - image: redis
+        name: redis
+status: {}
