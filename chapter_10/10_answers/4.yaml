@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webpage
+  name: webpage
+  annotations:
+    kubernetes.io/change-cause: "v2 - Update - Adding hello tag"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: webpage
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webpage
+        tier: frontend
+        hello: world
+    spec:
+      containers:
+      - image: nginxdemos/hello:plain-text
+        name: hello
+        resources: {}
+status: {}

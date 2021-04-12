@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: database
+  name: database
+  annotations:
+    kubernetes.io/change-cause: "v1 - Creation - Backend Database"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: database
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: database
+        tier: backend
+    spec:
+      containers:
+      - image: redis
+        name: redis
+        resources: {}
+status: {}

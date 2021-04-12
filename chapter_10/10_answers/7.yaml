@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webpage
+  name: webpage
+  annotations:
+    kubernetes.io/change-cause: "v4 - Update - RollingUpdate 50%"
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: webpage
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 50%
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webpage
+        hello: world
+    spec:
+      containers:
+      - image: nginxdemos/hello:plain-text
+        name: hello
+        resources: {}
+status: {}

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: database
+  name: database
+  annotations:
+    kubernetes.io/change-cause: "v2 - Update - Meet new requirements"
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: database
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1 
+      maxUnavailable: 10%
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: database
+        tier: backend
+        arewehuman: orarewedancers
+    spec:
+      containers:
+      - image: redis:latest
+        name: redis
+        resources: {}
+status: {}
