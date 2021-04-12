@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: special-config
+  namespace: default
+data:
+  mumei: miko
+  pokemon: blue
+  mtg: bwcontrol
+  stonks: gme 
+  song: meant_to_be
