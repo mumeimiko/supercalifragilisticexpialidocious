@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod-5
+spec:
+  containers:
+    - name: test-container
+      image: k8s.gcr.io/busybox
+      command: [ "/bin/sh", "-c"]
+      args:
+        - env;
+          ls -l /etc/config;
+          echo 'chocolate chip cookioe';
+          echo This is the username;
+          cat /etc/config/username && echo '';
+          echo This is the password;
+          cat /etc/config/password && echo '';
+      volumeMounts:
+      - name: config-volume
+        mountPath: /etc/config
+  volumes:
+    - name: config-volume
+      secret:
+        # Provide the name of the ConfigMap containing the files you want
+        # to add to the container
+        secretName: secret-basic-auth
+  restartPolicy: Never

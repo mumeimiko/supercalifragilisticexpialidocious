@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod-4
+spec:
+  containers:
+    - name: test-container
+      image: k8s.gcr.io/busybox
+      command: [ "/bin/sh", "-c"]
+      args:
+        - cat /etc/config/SPECIAL_LEVEL && echo '';
+          cat /etc/config/SPECIAL_TYPE && echo '';
+          echo 'chocolate chip cookioe';
+      volumeMounts:
+      - name: config-volume
+        mountPath: /etc/config
+  volumes:
+    - name: config-volume
+      configMap:
+        # Provide the name of the ConfigMap containing the files you want
+        # to add to the container
+        name: config4
+  restartPolicy: Never

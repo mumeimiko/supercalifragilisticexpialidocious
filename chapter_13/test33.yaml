@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod-33
+spec:
+  containers:
+    - name: test-container
+      image: k8s.gcr.io/busybox
+      command: [ "/bin/sh", "-c"]
+      args:
+        - echo '';
+          echo whats up? This is the command ran inside the container;
+          echo '';
+          echo Bellow you will see the current variables in a pod && echo '';
+          echo =================================== && echo '';
+          env;
+          echo '';
+          echo =================================== && echo '';
+          echo Now this is the variables we created in configmap being displayed within the pod;
+          echo '';
+          echo achybreakyheart sung by $achybreakyheart; echo meanttobe sung by $meanttobe; echo ringoffire sung by $ringoffire; echo needyounow sung by $needyounow; echo lovestory sung by $lovestory;
+      envFrom:
+      - configMapRef:
+          name: countrymusic
+  restartPolicy: Never
