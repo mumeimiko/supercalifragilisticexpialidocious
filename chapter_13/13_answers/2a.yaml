@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test1
+data:
+  # property-like keys; each key maps to a simple value
+  without-me: eminem
+  right-thurr: chingy
+  holidae-in: dr-dre
+  forget-about-dre: deorro
