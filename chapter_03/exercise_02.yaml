@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: myapp
+  name: myapp2
   labels:
-    name: myapp
+    name: myapp2
 spec:
   containers:
-  - name: test5
+  - name: test6
     image: nginx
     imagePullPolicy: IfNotPresent
     resources:

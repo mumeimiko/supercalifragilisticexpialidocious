@@ -136,3 +136,16 @@ It should look like this:
 # Exercises
 
 Take a look at file test_exercises.md for exercises.
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ubuntu-sleeper-2
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu
+    command:
+      - "sleep"
+      - "5000"
