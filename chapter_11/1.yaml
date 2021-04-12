@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  creationTimestamp: null
+  labels:
+    run: waffle
+  name: waffle
+spec:
+  selector:
+    matchLabels:
+      run: waffle
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: waffle
+    spec:
+      containers:
+      - image: quay.io/fluentd_elasticsearch/fluentd:v2.5.2
+        name: waffle
+

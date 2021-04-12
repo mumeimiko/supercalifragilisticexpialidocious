@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: bts
+  labels:
+    env: test
+spec:
+  containers:
+  - name: btw
+    image: nginx
+    imagePullPolicy: IfNotPresent
+  initContainers:
+  - name: busybox
+    image: busybox
+    imagePullPolicy: IfNotPresent
+    command: ['sh', '-c', 'until nslookup google.com; do echo waiting for google.com; sleep 2; done;']
+
