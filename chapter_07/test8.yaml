@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  type: NodePort
+  selector:
+    tier: frontend
+  ports:
+    - protocol: TCP
+      port: 80 #port on the service
+      nodePort: 30000 # port on the node that will be used. 
+      targetPort: 80 #target port the service will use agaisnt the pods
+
+      
