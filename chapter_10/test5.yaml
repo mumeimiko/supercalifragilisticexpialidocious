@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-page-prod
+  annotations:
+    kubernetes.io/change-cause: "v1 - Set replica number - 1"
+spec:
+  selector:
+    matchLabels:
+      tier: frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        env: prod
+        tier: frontend
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-prod
+spec:
+  selector:
+    matchLabels:
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        env: prod
+        tier: backend
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis
+        ports:
+        - containerPort: 6379
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-page-staging
+spec:
+  selector:
+    matchLabels:
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        env: stage
+        tier: backend
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-stage
+spec:
+  selector:
+    matchLabels:
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        env: stage
+        tier: backend
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis
+        ports:
+        - containerPort: 6379
+---
