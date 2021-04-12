@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: mana
+  labels:
+    forget-about-dre: deorro
+spec:
+  # modify replicas according to your case
+  replicas: 3
+  selector:
+    matchLabels:
+      forget-about-dre: deorro
+  template:
+    metadata:
+      labels:
+        forget-about-dre: deorro
+    spec:
+      containers:
+      - name: mana
+        image: debian
+        command:
+          - "sleep"
+          - "5000"

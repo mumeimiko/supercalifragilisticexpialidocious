@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: test1
+  labels:
+    sadness: the-weekend
+spec:
+  # modify replicas according to your case
+  replicas: 3
+  selector:
+    matchLabels:
+      sadness: the-weekend
+  template:
+    metadata:
+      labels:
+        sadness: the-weekend
+    spec:
+      containers:
+      - name: test1
+        image: debian
+        command:
+          - "sleep"
+          - "5000"
