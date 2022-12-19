@@ -1,11 +1,8 @@
-# song of the day 
-The Day - My Hero Academia
-
 # Pre-Req
 
 bash delete.sh
 
-# Graffiti - Banksy 
+# Labels
 
 Labeling, If you are familiar with AWS, its the same as tagging on resources.
 

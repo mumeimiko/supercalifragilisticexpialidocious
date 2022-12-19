@@ -19,7 +19,7 @@ tl:dr pods are containers.
 
 At the moment, you should be in the chapter_01 folder Please run pwd to see if you are are in the folder
 
-Run the following command 
+Run the following command from chapter_01
 
     bash cka1.sh
 
@@ -132,7 +132,8 @@ By default, kube-proxy and CNI run on each node.
 
 Let's clean up the environment
 
-    bash delete.sh
+    kubectl delete pod nginx
+    kubectl delete -f test1.yaml 
 
 # Takeaway
 

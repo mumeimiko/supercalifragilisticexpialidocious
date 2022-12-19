@@ -1,9 +1,6 @@
-# Song of the day 
-Tron Legacy (End Titles) - Daft Punk
-
 # Pre-Req
 
-bash delete.sh
+    bash delete.sh
 
 # Replica Sets
 
@@ -134,3 +131,8 @@ you can run kubectl scale replicasets web-server-2 --replicas=4
     web-server-1-5d49f66f6   3         3         3       5h30m
     web-server-2             4         4         4       5h7m
 
+# Excercises
+
+At this point, you will see a document called "excercises.md"
+
+These are exercises i recommened to try on your own. You will find the solutions for the exercises in 04_answers
