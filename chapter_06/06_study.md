@@ -1,11 +1,10 @@
-# song of the day 
-Kangaroo Court - Capital cities 
 
 # Pre-Req
 
 bash delete.sh
 
-# Buzz buzz buzz buzz-
+# Buzz buzz buzz buzz- To affinity and beyond
+
 
 Node Affinity/Anti-Affinity is one way to set rules on which nodes are selected by the scheduler. This feature is a generalization of the nodeSelector feature which has been in Kubernetes since version 1.0. 
 

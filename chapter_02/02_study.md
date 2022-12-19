@@ -296,3 +296,6 @@ Lets look at the pods logs
 kubectl run YOUR_POD_NAME -n YOUR_NAMESPACE --image SOME_PUBLIC_IMAGE:latest --command tailf /dev/null
 
 
+    Delete the resources you created
+    bash delete.sh  
+
